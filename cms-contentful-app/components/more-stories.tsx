@@ -1,6 +1,6 @@
 import PostPreview from '../components/post-preview'
 
-export default function MoreStories({ posts }) {
+const MoreStories = ({ posts }) => {
   return (
     <section>
       <h2 className="mb-8 text-6xl md:text-7xl font-bold tracking-tighter leading-tight">
@@ -22,3 +22,5 @@ export default function MoreStories({ posts }) {
     </section>
   )
 }
+
+export default MoreStories

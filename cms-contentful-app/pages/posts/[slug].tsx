@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 import ErrorPage from 'next/error'
+import { GetStaticProps, GetStaticPaths } from 'next'
 import Container from '../../components/container'
 import PostBody from '../../components/post-body'
 import MoreStories from '../../components/more-stories'
@@ -12,7 +13,25 @@ import { getAllPostsWithSlug, getPostAndMorePosts } from '../../lib/api'
 import PostTitle from '../../components/post-title'
 import { CMS_NAME } from '../../lib/constants'
 
-export default function Post({ post, morePosts, preview }) {
+type Post = {
+  title: string
+  coverImage: {
+    url: string
+  }
+  date: string
+  author: unknown
+  content: unknown
+}
+
+const Post = ({
+  post,
+  morePosts,
+  preview,
+}: {
+  post: Post
+  morePosts: Post[]
+  preview: unknown
+}) => {
   const router = useRouter()
 
   if (!router.isFallback && !post) {
@@ -53,7 +72,10 @@ export default function Post({ post, morePosts, preview }) {
   )
 }
 
-export async function getStaticProps({ params, preview = false }) {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const data = await getPostAndMorePosts(params.slug, preview)
 
   return {
@@ -65,10 +87,12 @@ export async function getStaticProps({ params, preview = false }) {
   }
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = await getAllPostsWithSlug()
   return {
     paths: allPosts?.map(({ slug }) => `/posts/${slug}`) ?? [],
     fallback: true,
   }
 }
+
+export default Post

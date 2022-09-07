@@ -14,7 +14,7 @@ const customMarkdownOptions = (content) => ({
   },
 })
 
-export default function PostBody({ content }) {
+const PostBody = ({ content }) => {
   return (
     <div className="max-w-2xl mx-auto">
       <div className={markdownStyles['markdown']}>
@@ -26,3 +26,5 @@ export default function PostBody({ content }) {
     </div>
   )
 }
+
+export default PostBody
