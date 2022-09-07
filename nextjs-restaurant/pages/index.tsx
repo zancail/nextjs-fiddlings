@@ -1,6 +1,8 @@
 import Head from 'next/head'
+import { getAllMenuItemsForHome } from '../lib/api'
+import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
-export default function Home() {
+const Home = ({ allMenuItems }) => {
   return (
     <div className="container">
       <Head>
@@ -10,42 +12,28 @@ export default function Home() {
 
       <main>
         <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">the Next.js restaurant!</a>
         </h1>
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {allMenuItems && (
+          <ul>
+            {allMenuItems.map((menuItem) => {
+              return (
+                <li key={menuItem.sys.id}>
+                  <h2>{menuItem.title}</h2>({menuItem.category})
+                  {menuItem.image && (
+                    <img width="400" src={menuItem.image.url} />
+                  )}
+                  {menuItem.price}
+                  {menuItem.currency}
+                  {menuItem.dietary}
+                  <div>
+                    {documentToReactComponents(menuItem.description.json)}
+                  </div>
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </main>
 
       <footer>
@@ -62,10 +50,6 @@ export default function Home() {
         .container {
           min-height: 100vh;
           padding: 0 0.5rem;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
         }
 
         main {
@@ -73,8 +57,6 @@ export default function Home() {
           flex: 1;
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          align-items: center;
         }
 
         footer {
@@ -115,7 +97,7 @@ export default function Home() {
         .title {
           margin: 0;
           line-height: 1.15;
-          font-size: 4rem;
+          font-size: 2rem;
         }
 
         .title,
@@ -138,11 +120,6 @@ export default function Home() {
         }
 
         .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
           max-width: 800px;
           margin-top: 3rem;
         }
@@ -206,3 +183,12 @@ export default function Home() {
     </div>
   )
 }
+
+export const getStaticProps = async ({ preview = false }) => {
+  let allMenuItems = (await getAllMenuItemsForHome(preview)) ?? []
+  return {
+    props: { preview, allMenuItems },
+  }
+}
+
+export default Home
