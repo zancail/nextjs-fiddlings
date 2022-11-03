@@ -1,3 +1,5 @@
+import { Config } from './config'
+
 const POST_GRAPHQL_FIELDS = `
     sys {
         id
@@ -51,4 +53,48 @@ export const getAllMenuItemsForHome = async (preview) => {
     preview
   )
   return extractMenuItemEntries(entries)
+}
+
+export const getTotalMenuItemsNumber = async () => {
+  // Build the query
+  const query = `
+  query {
+    menuItemCollection {
+      total
+    }
+  }
+`
+
+  // Call out to the API
+  const response = await fetchGraphQL(query)
+  const totalMenuItems = response?.data?.menuItemCollection?.total
+    ? response.data.menuItemCollection.total
+    : 0
+
+  return totalMenuItems
+}
+
+export const getPaginatedMenuSummaries = async (page) => {
+  const skipMultiplier = page === 1 ? 0 : page - 1
+  const skip =
+    skipMultiplier > 0 ? Config.pagination.pageSize * skipMultiplier : 0
+
+  const query = `
+  query {
+    menuItemCollection(limit: ${Config.pagination.pageSize}, skip: ${skip}) {
+        total
+        items {
+          ${POST_GRAPHQL_FIELDS}
+        }
+      }
+    }`
+
+  // Call out to the API
+  const response = await fetchGraphQL(query)
+
+  const paginatedPostSummaries = response?.data?.menuItemCollection
+    ? response.data.menuItemCollection
+    : { total: 0, items: [] }
+
+  return paginatedPostSummaries
 }
