@@ -15,7 +15,7 @@ const MenuIndexPage = ({ menuSummaries, totalPages, currentPage }) => {
       <h1 className="title">
         Welcome to <a href="https://nextjs.org">the Next.js restaurant!</a>
       </h1>
-      {menuSummaries ? (
+      {menuSummaries && menuSummaries.length ? (
         <MenuItemList
           items={menuSummaries}
           totalPages={totalPages}
@@ -51,7 +51,7 @@ export const getStaticProps = async ({ params }) => {
     props: {
       menuSummaries: menuSummaries.items,
       totalPages,
-      currentPage: '1',
+      currentPage: params.page,
     },
   }
 }
