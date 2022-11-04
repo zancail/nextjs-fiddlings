@@ -1,0 +1,7 @@
+/src/styles/bootstrap-grid.scss
+/.cache/*
+/.git/*
+/coverage/*
+/flow-typed/npm/*
+/node_modules/*
+/public/*

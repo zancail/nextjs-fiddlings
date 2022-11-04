@@ -1,10 +1,5 @@
-import {
-  getAllMenuItemsForHome,
-  getPaginatedMenuSummaries,
-  getTotalMenuItemsNumber,
-} from '@lib/api'
+import { getPaginatedMenuSummaries, getTotalMenuItemsNumber } from '@lib/api'
 import { Config } from '@lib/config'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Layout from '@components/layout'
 
 import { MenuItemList } from '@components/MenuItemList'
