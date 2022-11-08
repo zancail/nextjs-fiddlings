@@ -19,7 +19,15 @@ const SignUp = ({ providers }: SignUpType) => {
         username: "",
         email: "",
         password: "",
+        confirmPassword: "",
     });
+
+    const isObjectEmpty = (obj) => {
+        for (const i in obj) return false;
+        return true;
+    };
+
+    const [errorFields, setErrorFields] = useState({});
 
     const handleOnChange = (inputValue: string, inputName: string) => {
         setFormFields((prevValue) => {
@@ -31,6 +39,21 @@ const SignUp = ({ providers }: SignUpType) => {
 
     const handleOnSubmit = async (e, removeKeys) => {
         e.preventDefault();
+        // Validate fields
+        if (formFields.password !== formFields.confirmPassword) {
+            setErrorFields((prevValue) => {
+                return {
+                    ...prevValue,
+                    ...{
+                        password: "Passwords have to match",
+                        confirmPassword: "Passwords have to match",
+                    },
+                };
+            });
+            return;
+        }
+        setErrorFields({});
+        // Remove fields we do not need for the contentful api
         const filteredFields = { ...formFields };
         removeKeys.forEach((key) => {
             delete filteredFields[key];
@@ -43,6 +66,11 @@ const SignUp = ({ providers }: SignUpType) => {
         <Layout>
             <div className="row justify-content-center">
                 <div className="col-lg-6">
+                    {!isObjectEmpty(errorFields) && (
+                        <div className="alert alert-danger" role="alert">
+                            Please correct the errors first.
+                        </div>
+                    )}
                     <form
                         onSubmit={(e) => {
                             handleOnSubmit(e, ["confirmPassword"]);
@@ -52,24 +80,33 @@ const SignUp = ({ providers }: SignUpType) => {
                             type="username"
                             field="username"
                             label="Username"
+                            required={false}
+                            oldValue={formFields.username}
+                            errors={errorFields}
                             handleOnChange={handleOnChange}
                         />
                         <FormInput
                             type="email"
                             field="email"
                             label="Email"
+                            required={true}
+                            errors={errorFields}
                             handleOnChange={handleOnChange}
                         />
                         <FormInput
                             type="password"
                             field="password"
                             label="Password"
+                            required={true}
+                            errors={errorFields}
                             handleOnChange={handleOnChange}
                         />
                         <FormInput
                             type="password"
                             field="confirmPassword"
                             label="Confirm Password"
+                            required={true}
+                            errors={errorFields}
                             handleOnChange={handleOnChange}
                         />
                         <button className="btn btn-primary" type="submit">
