@@ -10,12 +10,20 @@ const MenuIndex = ({
     totalPages,
     currentPage,
 }) => {
+    const query = {
+        fields: {
+            title: {
+                "en-US": "Hello, World!",
+            },
+        },
+    };
     return (
         <Layout>
             <h1 className="title">
                 Welcome to{" "}
                 <a href="https://nextjs.org">the Next.js restaurant!</a>
             </h1>
+
             {menuSummaries && menuSummaries.length ? (
                 <MenuItemList
                     items={menuSummaries}

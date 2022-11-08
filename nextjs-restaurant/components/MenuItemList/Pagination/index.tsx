@@ -29,8 +29,11 @@ const Pagination = ({
         return (
             <li className="page-item">
                 {index !== parseInt(currentPage) ? (
-                    <Link href={index === 1 ? "/menu" : `/menu/page/${index}`}>
-                        <a className="page-link">{index}</a>
+                    <Link
+                        href={index === 1 ? "/menu" : `/menu/page/${index}`}
+                        className="page-link"
+                    >
+                        {index}
                     </Link>
                 ) : (
                     <span className="page-link active">{index}</span>
@@ -57,8 +60,8 @@ const Pagination = ({
                             <span className="page-link">Previous</span>
                         )}
                         {!prevDisabled && (
-                            <Link href={prevPageUrl}>
-                                <a className="page-link">Previous</a>
+                            <Link href={prevPageUrl} className="page-link">
+                                Previous
                             </Link>
                         )}
                     </li>
@@ -69,7 +72,7 @@ const Pagination = ({
                         )}
                         {!nextDisabled && (
                             <Link href={nextPageUrl} className="page-link">
-                                <a className="page-link">Next</a>
+                                Next
                             </Link>
                         )}
                     </li>

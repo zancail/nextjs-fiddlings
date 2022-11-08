@@ -26,18 +26,17 @@ const Header = (): JSX.Element => {
                     >
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link href={"/"}>
-                                    <a
-                                        className="nav-link active"
-                                        aria-current="page"
-                                    >
-                                        Home
-                                    </a>
+                                <Link
+                                    href={"/"}
+                                    className="nav-link active"
+                                    aria-current="page"
+                                >
+                                    Home
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link href={"/menu"}>
-                                    <a className="nav-link">Menu</a>
+                                <Link href={"/menu"} className="nav-link">
+                                    Menu
                                 </Link>
                             </li>
                         </ul>

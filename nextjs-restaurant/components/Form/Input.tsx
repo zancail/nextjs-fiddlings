@@ -2,9 +2,15 @@ interface Props {
     type: string;
     field: string;
     label: string;
+    handleOnChange?: unknown;
 }
 
-const FormInput = ({ type, field, label }: Props): JSX.Element => {
+const FormInput = ({
+    type,
+    field,
+    label,
+    handleOnChange,
+}: Props): JSX.Element => {
     return (
         <div>
             <label htmlFor={field} className="form-label">
@@ -15,6 +21,7 @@ const FormInput = ({ type, field, label }: Props): JSX.Element => {
                 id={field}
                 name={field}
                 className="form-control"
+                onChange={(event) => handleOnChange(event.target.value, field)}
             />
         </div>
     );
