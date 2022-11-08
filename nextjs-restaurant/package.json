@@ -7,6 +7,7 @@
     },
     "dependencies": {
         "@contentful/rich-text-react-renderer": "^15.12.1",
+        "bcryptjs": "^2.4.3",
         "bootstrap": "^5.2.2",
         "classnames": "^2.3.1",
         "date-fns": "^2.29.2",

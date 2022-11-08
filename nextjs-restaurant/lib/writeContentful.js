@@ -1,20 +1,3 @@
-// export const createNewItem = async (query, variables = {}) => {
-//     return fetch(
-//         `https://api.contentful.com/spaces/fn6edoiz5ew1/environments/master/entries`,
-//         {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/vnd.contentful.management.v1+json",
-//                 "X-Contentful-Content-Type": "menuItem",
-//                 Authorization: `Bearer ${process.env.CONTENTFUL_MANAGEMENT_TOKEN}`,
-//             },
-//             body: JSON.stringify({ query, variables }),
-//         },
-//     ).then((response) => {
-//         return response.json();
-//     });
-// };
-
 import { createClient } from "contentful-management";
 
 export const submitForm = async (fields, contentType) => {
