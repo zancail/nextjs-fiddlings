@@ -1,6 +1,7 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Link from "next/link";
 import Pagination from "./Pagination";
+import styles from "./menulist.module.scss";
 
 export const MenuItemList = ({ items, currentPage, totalPages }) => {
     const nextDisabled = parseInt(currentPage, 10) === parseInt(totalPages, 10);
@@ -8,23 +9,20 @@ export const MenuItemList = ({ items, currentPage, totalPages }) => {
 
     return (
         <>
-            <ul>
+            <ul className="menuList">
                 {items.map((menuItem) => {
                     return (
                         <li key={menuItem.sys.id}>
-                            <h2>{menuItem.title}</h2>({menuItem.category})
-                            {menuItem.image && (
-                                <img width="400" src={menuItem.image.url} />
-                            )}
-                            {menuItem.price}
-                            {menuItem.currency}
-                            {menuItem.dietary}
                             <div>
-                                {documentToReactComponents(
-                                    menuItem.description.json,
+                                <h2>{menuItem.title}</h2>({menuItem.category})
+                                {menuItem.image && (
+                                    <img width="400" src={menuItem.image.url} />
                                 )}
+                                {menuItem.price}
+                                {menuItem.currency}
                             </div>
                             <Link href={`menu/${menuItem.sys.id}`}>View</Link>
+                            <hr />
                         </li>
                     );
                 })}

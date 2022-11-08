@@ -1,14 +1,18 @@
 .container {
-  max-width: 36rem;
-  padding: 0 1rem;
-  margin: 3rem auto 6rem;
+    max-width: 36rem;
+    padding: 0 1rem;
+    margin: 3rem auto 6rem;
 }
 
 .header {
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 }
 
 .backToHome {
-  margin: 3rem 0 0;
+    margin: 3rem 0 0;
+}
+
+.navigation {
+    padding: 0;
 }
