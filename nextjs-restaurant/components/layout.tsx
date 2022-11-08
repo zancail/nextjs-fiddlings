@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Link from "next/link";
+
 import React from "react";
-import { LoginButton } from "./login-button";
+import Footer from "./General/Footer";
+import Header from "./General/header";
 
 export const siteTitle = "Next.js Sample Website";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }): JSX.Element => {
     return (
         <div className="container">
             <Head>
@@ -23,30 +24,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <meta name="og:title" content={siteTitle} />
                 <meta name="twitter:card" content="summary_large_image" />
             </Head>
-            <header className="header">
-                <nav>
-                    <ul className="navigation">
-                        <li>
-                            <Link href={"/"}>Home</Link>
-                        </li>
-                        <li>
-                            <Link href={"/menu"}>Menu</Link>
-                        </li>
-                    </ul>
-                </nav>
-                <LoginButton />
-            </header>
+            <Header />
             <main>{children}</main>
-            <footer>
-                <a
-                    href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Powered by{" "}
-                    <img src="/vercel.svg" alt="Vercel" className="logo" />
-                </a>
-            </footer>
+            <Footer />
 
             <style jsx>{`
                 .container {
@@ -73,25 +53,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
                 nav ul li {
                     padding: 0 1rem;
-                }
-
-                footer {
-                    width: 100%;
-                    height: 100px;
-                    border-top: 1px solid #eaeaea;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                }
-
-                footer img {
-                    margin-left: 0.5rem;
-                }
-
-                footer a {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
                 }
 
                 a {

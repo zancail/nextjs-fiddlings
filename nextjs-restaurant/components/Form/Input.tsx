@@ -1,7 +1,21 @@
-const FormInput = ({ type, field }) => {
+interface Props {
+    type: string;
+    field: string;
+    label: string;
+}
+
+const FormInput = ({ type, field, label }: Props): JSX.Element => {
     return (
         <div>
-            <input type={type} id={field} name={field} />
+            <label htmlFor={field} className="form-label">
+                {label}
+            </label>
+            <input
+                type={type}
+                id={field}
+                name={field}
+                className="form-control"
+            />
         </div>
     );
 };

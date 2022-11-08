@@ -1,12 +1,21 @@
 import Link from "next/link";
-import styles from "./pagination.module.scss";
+
+interface Props {
+    totalPages: number;
+    currentPage: string;
+    prevDisabled: boolean;
+    nextDisabled: boolean;
+}
 
 const Pagination = ({
     totalPages,
     currentPage,
     prevDisabled,
     nextDisabled,
-}) => {
+}: Props): JSX.Element => {
+    if (totalPages < 2) {
+        return <></>;
+    }
     const prevPageUrl =
         currentPage === "2"
             ? "/menu"
@@ -18,13 +27,13 @@ const Pagination = ({
 
     const listItem = (index) => {
         return (
-            <li className="paginationItem">
+            <li className="page-item">
                 {index !== parseInt(currentPage) ? (
                     <Link href={index === 1 ? "/menu" : `/menu/page/${index}`}>
-                        {index}
+                        <a className="page-link">{index}</a>
                     </Link>
                 ) : (
-                    index
+                    <span className="page-link active">{index}</span>
                 )}
             </li>
         );
@@ -36,30 +45,36 @@ const Pagination = ({
 
     return (
         <>
-            <ul className="pagination">
-                <li className="paginationItem">
-                    {prevDisabled && <span>Previous page</span>}
-                    {!prevDisabled && (
-                        <Link href={prevPageUrl}>
-                            <a>Previous page</a>
-                        </Link>
-                    )}
-                </li>
-                <li className="paginationItem">
-                    Page {currentPage} of {totalPages}
-                </li>
-                <li className="paginationItem">
-                    {nextDisabled && <span>Next page</span>}
-                    {!nextDisabled && (
-                        <Link href={nextPageUrl}>
-                            <a>Next page</a>
-                        </Link>
-                    )}
-                </li>
-            </ul>
-            <ul className="pagination">
-                {listItems.map((listItem) => listItem)}
-            </ul>
+            <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                    <li className="page-item">
+                        Page {currentPage} of {totalPages}
+                    </li>
+                </ul>
+                <ul className="pagination justify-content-center">
+                    <li className="page-item">
+                        {prevDisabled && (
+                            <span className="page-link">Previous</span>
+                        )}
+                        {!prevDisabled && (
+                            <Link href={prevPageUrl}>
+                                <a className="page-link">Previous</a>
+                            </Link>
+                        )}
+                    </li>
+                    {listItems.map((listItem) => listItem)}
+                    <li className="page-item">
+                        {nextDisabled && (
+                            <span className="page-link">Next</span>
+                        )}
+                        {!nextDisabled && (
+                            <Link href={nextPageUrl} className="page-link">
+                                <a className="page-link">Next</a>
+                            </Link>
+                        )}
+                    </li>
+                </ul>
+            </nav>
         </>
     );
 };

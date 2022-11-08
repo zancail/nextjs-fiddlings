@@ -1,10 +1,30 @@
-import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Link from "next/link";
 import Pagination from "./Pagination";
-import styles from "./menulist.module.scss";
 
-export const MenuItemList = ({ items, currentPage, totalPages }) => {
-    const nextDisabled = parseInt(currentPage, 10) === parseInt(totalPages, 10);
+interface MenuItemType {
+    sys: {
+        id: string;
+    };
+    title: string;
+    category: string;
+    image: {
+        url: string;
+    };
+    price: number;
+    currency: string;
+}
+interface Props {
+    items: MenuItemType[];
+    currentPage: string;
+    totalPages: number;
+}
+
+export const MenuItemList = ({
+    items,
+    currentPage,
+    totalPages,
+}: Props): JSX.Element => {
+    const nextDisabled = parseInt(currentPage, 10) === totalPages;
     const prevDisabled = parseInt(currentPage, 10) === 1;
 
     return (
@@ -33,6 +53,13 @@ export const MenuItemList = ({ items, currentPage, totalPages }) => {
                 nextDisabled={nextDisabled}
                 prevDisabled={prevDisabled}
             />
+            <style jsx>{`
+                .menuList {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                }
+            `}</style>
         </>
     );
 };
